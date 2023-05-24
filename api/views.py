@@ -37,3 +37,16 @@ class RetrieveAllContracts(APIView):
         queryset = OptionsContract.objects.all()
         serializer = OptionsContractSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class DeleteOption(APIView):
+    def single_task(self, id_arg):
+        try:
+            queryset = OptionsContract.objects.get(id=id_arg)
+            return queryset
+        except:
+            return None
+        
+    def delete(self, request, id_arg):
+        option = self.single_task(id_arg)
+        option.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
